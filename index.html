@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Game Services – Elden Ring & ARC Raiders</title>
+  <meta name="description" content="Coaching, Carry und Hilfe in Elden Ring & ARC Raiders. Schnell, fair, transparent." />
+  <style>
+    :root{
+      --bg:#0b0f17; --card:#111a2b; --muted:#8ea0c7; --text:#eaf0ff;
+      --accent:#6ee7ff; --accent2:#a78bfa; --ok:#34d399; --warn:#fbbf24;
+      --border: rgba(255,255,255,.10);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --max: 1100px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:var(--font); color:var(--text);
+      background: radial-gradient(1000px 600px at 20% -10%, rgba(110,231,255,.20), transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(167,139,250,.18), transparent 55%),
+                  linear-gradient(180deg, #070a10 0%, var(--bg) 40%, #070a10 100%);
+      min-height:100vh;
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:24px;}
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(7,10,16,.65);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+      max-width:var(--max); margin:0 auto; padding:14px 24px;
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px;}
+    .logo{
+      width:36px; height:36px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(110,231,255,.95), rgba(167,139,250,.95));
+      box-shadow: 0 10px 25px rgba(110,231,255,.12);
+    }
+    .navlinks{display:flex; gap:14px; flex-wrap:wrap; justify-content:flex-end}
+    .navlinks a{
+      text-decoration:none; color:var(--muted);
+      padding:8px 10px; border-radius:12px;
+      border:1px solid transparent;
+    }
+    .navlinks a:hover{color:var(--text); border-color:var(--border); background: rgba(255,255,255,.03)}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px; border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      text-decoration:none; cursor:pointer;
+      transition: transform .05s ease, background .2s ease, border-color .2s ease;
+      user-select:none;
+    }
+    .btn:hover{background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.18)}
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      border-color: rgba(110,231,255,.35);
+      background: linear-gradient(135deg, rgba(110,231,255,.18), rgba(167,139,250,.12));
+    }
+    .hero{padding:56px 0 18px}
+    .heroGrid{display:grid; grid-template-columns: 1.2fr .8fr; gap:22px; align-items:stretch}
+    @media (max-width: 900px){ .heroGrid{grid-template-columns:1fr} }
+    .card{
+      background: linear-gradient(180deg, rgba(17,26,43,.9), rgba(17,26,43,.65));
+      border:1px solid var(--border); border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .heroCard{padding:26px}
+    h1{margin:0 0 10px; font-size: clamp(28px, 4vw, 44px); line-height:1.05}
+    .sub{color:var(--muted); font-size: 16px; line-height:1.6; margin:0 0 18px}
+    .pillRow{display:flex; gap:10px; flex-wrap:wrap; margin: 14px 0 18px}
+    .pill{
+      font-size:13px; color:rgba(234,240,255,.92);
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      padding:8px 10px; border-radius: 999px;
+    }
+    .heroActions{display:flex; gap:12px; flex-wrap:wrap; margin-top:12px}
+    .sideCard{padding:18px; display:flex; flex-direction:column; gap:12px}
+    .stat{
+      padding:14px; border-radius:16px;
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--border);
+    }
+    .stat b{display:block; font-size:14px; margin-bottom:4px}
+    .stat span{color:var(--muted); font-size:13px; line-height:1.5}
+    section{padding:26px 0}
+    .sectionTitle{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:18px; flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    h2{margin:0; font-size: 22px}
+    .hint{color:var(--muted); font-size: 13px}
+    .grid3{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px}
+    @media (max-width: 980px){ .grid3{grid-template-columns:1fr} }
+    .service{padding:18px}
+    .tag{display:inline-flex; gap:8px; align-items:center; font-size:12px; color:rgba(234,240,255,.9)}
+    .dot{width:8px; height:8px; border-radius:99px; background: var(--accent)}
+    .service h3{margin:10px 0 6px; font-size:18px}
+    .service p{margin:0; color:var(--muted); line-height:1.6; font-size:14px}
+    .priceRow{margin-top:12px; display:flex; align-items:center; justify-content:space-between; gap:10px}
+    .price{
+      font-weight:800;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      font-size:18px;
+    }
+    .small{font-size:12px; color:var(--muted)}
+    .grid2{display:grid; grid-template-columns: 1fr 1fr; gap:14px}
+    @media (max-width: 980px){ .grid2{grid-template-columns:1fr} }
+    details{
+      border:1px solid var(--border);
+      border-radius:16px; background: rgba(255,255,255,.03);
+      padding:14px 14px;
+    }
+    summary{cursor:pointer; font-weight:700}
+    details p{margin:10px 0 0; color:var(--muted); line-height:1.6}
+    .contact{padding:18px}
+    .form{
+      display:grid; gap:10px; margin-top:12px;
+    }
+    input, textarea{
+      width:100%; padding:12px 12px;
+      border-radius:14px; border:1px solid var(--border);
+      background: rgba(0,0,0,.22); color:var(--text);
+      outline:none;
+    }
+    textarea{min-height:110px; resize:vertical}
+    .footer{
+      padding:22px 0 40px; color:var(--muted); font-size:12px;
+      border-top:1px solid var(--border); margin-top:18px;
+    }
+    .toast{
+      position: fixed; right: 18px; bottom: 18px;
+      padding: 12px 14px; border-radius: 14px;
+      border:1px solid var(--border);
+      background: rgba(17,26,43,.92);
+      box-shadow: var(--shadow);
+      opacity:0; transform: translateY(6px);
+      transition: .25s ease;
+      pointer-events:none;
+      color: var(--text);
+      max-width: 320px;
+    }
+    .toast.show{opacity:1; transform: translateY(0)}
+    .legal{
+      font-size:12px; color: var(--muted); line-height:1.55;
+      border-left: 3px solid rgba(110,231,255,.35);
+      padding-left: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div style="font-size:14px;">Game Services</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">Elden Ring • ARC Raiders</div>
+        </div>
+      </div>
+
+      <nav class="navlinks" aria-label="Navigation">
+        <a href="#services">Services</a>
+        <a href="#preise">Preise</a>
+        <a href="#faq">FAQ</a>
+        <a href="#kontakt">Kontakt</a>
+        <a class="btn primary" href="#kontakt">Anfrage senden</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="top">
+      <div class="heroGrid">
+        <div class="card heroCard">
+          <h1>Carry, Coaching & Hilfe<br/>für Elden Ring & ARC Raiders</h1>
+          <p class="sub">
+            Transparent, schnell und ohne Drama. Du sagst mir, was du brauchst – ich helfe dir beim Fortschritt, Builds,
+            Bossen oder Strategien. (Account-Sharing empfehle ich nicht.)
+          </p>
+
+          <div class="pillRow">
+            <span class="pill">✅ Fixe Preise</span>
+            <span class="pill">⚡ Schnelle Termine</span>
+            <span class="pill">🛡️ Fair & respektvoll</span>
+            <span class="pill">💬 Discord Support</span>
+          </div>
+
+          <div class="heroActions">
+            <a class="btn primary" href="#services">Services anschauen</a>
+            <a class="btn" id="discordBtn" href="https://discord.com/" target="_blank" rel="noopener">Discord öffnen</a>
+            <button class="btn" id="copyDiscord">Discord-Tag kopieren</button>
+          </div>
+
+          <p class="small" style="margin-top:14px;">
+            Tipp: Passe den Discord-Link und deinen Tag im Code an (suche nach <b>YOUR_DISCORD</b>).
+          </p>
+        </div>
+
+        <div class="card sideCard">
+          <div class="stat">
+            <b>Was ist möglich?</b>
+            <span>Boss-Hilfe, Coop-Carry, Build-Optimierung, Farming-Plan, Loadout/Strategie-Call. Alles ohne Account-Zugriff.</span>
+          </div>
+          <div class="stat">
+            <b>Wie läuft’s ab?</b>
+            <span>Du schreibst kurz dein Ziel → wir klären Zeit/Preis → Session über Discord → fertig.</span>
+          </div>
+          <div class="stat">
+            <b>Sicherheit</b>
+            <span class="legal">Ich biete keine Garantie gegen AGB-Maßnahmen. Prüfe die Regeln des jeweiligen Spiels.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="sectionTitle">
+        <h2>Services</h2>
+        <div class="hint">Du kannst alles hier umbenennen (z. B. „Max Level“ → „Effizient leveln (Coaching)“)</div>
+      </div>
+
+      <div class="grid3">
+        <div class="card service">
+          <div class="tag"><span class="dot"></span> Elden Ring</div>
+          <h3>Boss-Hilfe (Coop Carry)</h3>
+          <p>Ich helfe dir, Bosse zu legen, Mechaniken zu lernen und deinen Build zu verbessern.</p>
+          <div class="priceRow">
+            <div class="price">ab 10€</div>
+            <a class="btn" href="#kontakt">Anfragen</a>
+          </div>
+        </div>
+
+        <div class="card service">
+          <div class="tag"><span class="dot"></span> Elden Ring</div>
+          <h3>Build-Check & Optimierung</h3>
+          <p>Stats, Talisman, Waffen, Infusionen – wir machen deinen Build effizient und spielbar.</p>
+          <div class="priceRow">
+            <div class="price">ab 8€</div>
+            <a class="btn" href="#kontakt">Anfragen</a>
+          </div>
+        </div>
+
+        <div class="card service">
+          <div class="tag"><span class="dot"></span> ARC Raiders</div>
+          <h3>Strategie-Coaching</h3>
+          <p>Routen, Risiko-Management, Loot-Prioritäten, Teamplay – wir verbessern dein Gameplay.</p>
+          <div class="priceRow">
+            <div class="price">ab 12€</div>
+            <a class="btn" href="#kontakt">Anfragen</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="preise">
+      <div class="sectionTitle">
+        <h2>Preise</h2>
+        <div class="hint">Beispielpreise – ändere sie einfach</div>
+      </div>
+
+      <div class="grid3">
+        <div class="card service">
+          <h3>Coop Boss-Hilfe</h3>
+          <p>1 Boss / Ziel. Inkl. kurzer Build-Check vor dem Try.</p>
+          <div class="priceRow">
+            <div class="price">10–25€</div>
+            <span class="small">je nach Boss</span>
+          </div>
+        </div>
+
+        <div class="card service">
+          <h3>Coaching (45 Min)</h3>
+          <p>Gameplay-Analyse, Plan + Übungen. Ideal für Fortschritt.</p>
+          <div class="priceRow">
+            <div class="price">15€</div>
+            <span class="small">pro Session</span>
+          </div>
+        </div>
+
+        <div class="card service">
+          <h3>Bundle</h3>
+          <p>3 Sessions zum Vorteilspreis (Mix möglich).</p>
+          <div class="priceRow">
+            <div class="price">ab 35€</div>
+            <span class="small">nach Absprache</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="sectionTitle">
+        <h2>FAQ</h2>
+        <div class="hint">Klick auf die Fragen</div>
+      </div>
+
+      <div class="grid2">
+        <details>
+          <summary>Wie buche ich?</summary>
+          <p>Schreib mir über das Kontaktformular oder Discord. Nenne Spiel, Plattform, Ziel und deinen Zeitrahmen.</p>
+        </details>
+
+        <details>
+          <summary>Welche Plattformen?</summary>
+          <p>Trage hier deine Plattformen ein (PC/PS/Xbox). Beispiel: „PC & PlayStation“.</p>
+        </details>
+
+        <details>
+          <summary>Machst du Account-Sharing?</summary>
+          <p>Empfehlung: Nein. Am sichersten sind Coaching & Coop-Sessions ohne Zugangsdaten.</p>
+        </details>
+
+        <details>
+          <summary>Wie läuft die Bezahlung?</summary>
+          <p>Du kannst hier PayPal/Bank/… eintragen. Nutze klare Absprachen und eine kurze Leistungsbeschreibung.</p>
+        </details>
+      </div>
+    </section>
+
+    <section id="kontakt">
+      <div class="sectionTitle">
+        <h2>Kontakt</h2>
+        <div class="hint">Formular erzeugt eine E-Mail (kein Server nötig)</div>
+      </div>
+
+      <div class="card contact">
+        <p class="sub" style="margin:0;">
+          Schreib kurz, was du brauchst. Danach melde ich mich über Discord oder per E-Mail.
+        </p>
+
+        <form class="form" id="contactForm">
+          <input id="name" placeholder="Dein Name" required />
+          <input id="game" placeholder="Spiel (z. B. Elden Ring / ARC Raiders)" required />
+          <input id="platform" placeholder="Plattform (PC/PS/Xbox)" required />
+          <textarea id="msg" placeholder="Was genau möchtest du? (Boss, Build, Coaching, etc.)" required></textarea>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button type="submit" class="btn primary">E-Mail erstellen</button>
+            <a class="btn" href="#top">Nach oben</a>
+          </div>
+
+          <p class="small">
+            E-Mail Empfänger anpassen: Suche im Code nach <b>YOUR_EMAIL@example.com</b>
+          </p>
+        </form>
+
+        <div class="legal" style="margin-top:10px;">
+          Rechtliches: Dies ist keine offizielle Seite von FromSoftware/Bandai Namco oder Embark Studios.
+          Alle Marken gehören ihren jeweiligen Eigentümern.
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div>© <span id="year"></span> Game Services • Impressum/Datenschutz optional (je nach Nutzung & Land)</div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // ====== HIER ANPASSEN ======
+    const DISCORD_TAG = "YOUR_DISCORD";      // z.B. "Name#1234" oder dein neuer Discord-Handle
+    const CONTACT_EMAIL = "YOUR_EMAIL@example.com";
+    const DISCORD_INVITE_LINK = "https://discord.com/"; // z.B. "https://discord.gg/DEININVITE"
+    // ===========================
+
+    const toast = (text) => {
+      const el = document.getElementById("toast");
+      el.textContent = text;
+      el.classList.add("show");
+      clearTimeout(window.__t);
+      window.__t = setTimeout(() => el.classList.remove("show"), 2800);
+    };
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Discord button link
+    const discordBtn = document.getElementById("discordBtn");
+    discordBtn.href = DISCORD_INVITE_LINK;
+
+    // Copy Discord tag
+    document.getElementById("copyDiscord").addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText(DISCORD_TAG);
+        toast("Discord-Tag kopiert: " + DISCORD_TAG);
+      }catch(e){
+        toast("Kopieren nicht möglich. Dein Tag: " + DISCORD_TAG);
+      }
+    });
+
+    // Contact form -> mailto (no backend)
+    document.getElementById("contactForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const game = document.getElementById("game").value.trim();
+      const platform = document.getElementById("platform").value.trim();
+      const msg = document.getElementById("msg").value.trim();
+
+      const subject = encodeURIComponent(`Anfrage: ${game} (${platform}) - ${name}`);
+      const body = encodeURIComponent(
+`Hi! Ich hätte Interesse an deinem Service.
+
+Name: ${name}
+Spiel: ${game}
+Plattform: ${platform}
+
+Details:
+${msg}
+
+Kontakt (Discord): ${DISCORD_TAG}`
+      );
+
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+      toast("E-Mail vorbereitet. Bitte im Mailprogramm senden ✅");
+    });
+  </script>
+</body>
+</html>
